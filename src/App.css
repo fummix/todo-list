@@ -24,11 +24,20 @@ body{
     display: flex;
   
 }
-input,button {
+/* input,button {
 border: none;
 appearance: none;
 outline: none;
 background-color: none;
+} */
+.btn{
+    padding: 8px 16px;
+    outline: none;
+    border-radius: 8px;
+    border: none;
+    font-size: 16px;
+    color: white;
+    background-color: blue;
 }
 #task-form-input{
     flex: 1 1 0%;
@@ -36,7 +45,8 @@ background-color: none;
     padding: 9px;
     border-radius: 9px;
     margin-right: 8px;
-   
+   outline: none;
+   border: none;
     color: gray;
     font-size: 15px;
 
@@ -46,6 +56,7 @@ background-color: none;
     color: grey;
 }
 #task-form-submit{
+ 
     outline: none;
     border: none;
     background-color: transparent;
@@ -100,6 +111,9 @@ background-color: none;
     cursor: pointer;
 } */
  
- 
+ .edit , .delete{
+    outline: none;
+    border: none;
+ }
 
     
