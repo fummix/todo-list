@@ -4,10 +4,22 @@ import './App.css';
 
 function App() {
   const[todoList, setTodoList] = useState([])
-  const[todo, setTodo] = useState({todoName:''})
-
+  const[todo, setTodo] = useState({todoName:'', id: todoList.length+1})
+ //##################
+ const showRecordInForm=(item)=>{
+setTodo(item)
+ }
+//################Delete Record From todoList
+const deleteRecord=(id)=>{
+  console.log("We retrieve Id for deletion", id)
+  const filteredList = todoList.filter(existingTodo=> existingTodo.id!==id)
+  console.log(filteredList)
+  setTodoList(filteredList)
+ // saveToLocalStorage()
+}
+//#################
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name, value} = e.target;
     setTodo({
       ...todo,
       [name]: value
@@ -30,12 +42,13 @@ const AddToList=(event)=>{
 event.preventDefault();
 todoList.push(todo) // add todo to list
 saveToLocalStorage()
-setTodo({"todoName":''})
+setTodo({todoName:'',id: todoList.length+1})
   };
 
   useEffect(() => {
     getFromLocalStorage()
   }, []);
+  
   return (
     <div className="App">
       
@@ -61,7 +74,7 @@ setTodo({"todoName":''})
           <p>{item.todoName}</p>
         </div>
         <div className="icons">
-          <button
+          <button onClick={()=>showRecordInForm(item)}
             className="edit"
             style={{
               backgroundColor: "blue",
@@ -72,7 +85,7 @@ setTodo({"todoName":''})
           >
             Edit
           </button>
-          <button
+          <button onClick={()=> deleteRecord(item.id)}
             className="delete"
             style={{
               backgroundColor: "blue",
