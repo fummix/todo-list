@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   const[todoList, setTodoList] = useState([])
-  const[todo, setTodo] = useState({todoName:'', id: todoList.length+1})
+  const[todo, setTodo] = useState({todoName:'', id: todoList.length+1,status:false})
  //##################
  const showRecordInForm=(item)=>{
 setTodo(item)
@@ -15,20 +15,27 @@ const deleteRecord=(id)=>{
   const filteredList = todoList.filter(existingTodo=> existingTodo.id!==id)
   console.log(filteredList)
   setTodoList(filteredList)
- // saveToLocalStorage()
+  saveToLocalStorage()
 }
 //#################
   const handleChange = (e) => {
     const { name, value} = e.target;
-    setTodo({
+     setTodo({
       ...todo,
       [name]: value
+    });
+  };
+  const handleCheckBoxChange = (e) => {
+    const { name, checked} = e.target;
+    console.log(name, checked)
+    setTodo({
+      ...todo,
+      [name]: checked
     });
   };
 const saveToLocalStorage =()=>{ // method to save to local storage
   const todoJson =JSON.stringify(todoList) // converted to json before saving
 localStorage.setItem("todo", todoJson); // save to local storage
-getFromLocalStorage()
 }
 
 const getFromLocalStorage=()=>{
@@ -42,7 +49,7 @@ const AddToList=(event)=>{
 event.preventDefault();
 todoList.push(todo) // add todo to list
 saveToLocalStorage()
-setTodo({todoName:'',id: todoList.length+1})
+setTodo({todoName:'',id: todoList.length+1, status: false})
   };
 
   useEffect(() => {
@@ -56,6 +63,8 @@ setTodo({todoName:'',id: todoList.length+1})
           <h2>Add new Todo</h2>
 
           <form  className="task-form" onSubmit={AddToList}>
+          <input type="checkbox" checked={todo.status}   className='checkinput'   onChange={handleCheckBoxChange} name="status"
+          style={{ border: "1px solid gray", "borderradius": "1px", width: "20px",  height:"20px" ," backgroundcolor": "white"}}/>
             <input type="text" name="todoName" placeholder="Todo Name" id="task-form-input" value={todo.todoName}
              onChange={handleChange}/>
             {/* <input type="submit" value="Add" id="task-form-submit"  onClick={ (e)}/> */}
@@ -71,10 +80,10 @@ setTodo({todoName:'',id: todoList.length+1})
     todoList.map((item) => (
       <div className="task" key={item.id}>
         <div className="container">
-          <p>{item.todoName}</p>
+          <p style={{textDecoration: item.status?'line-through':'none'}}>{item.todoName}</p>
         </div>
         <div className="icons">
-          <button onClick={()=>showRecordInForm(item)}
+                  <button onClick={()=>showRecordInForm(item)}
             className="edit"
             style={{
               backgroundColor: "blue",
@@ -101,7 +110,7 @@ setTodo({todoName:'',id: todoList.length+1})
       </div>
     ))
   ) : (
-    <p>No tasks available</p>
+    <p> No tasks available</p>
   )}
 </div>
 

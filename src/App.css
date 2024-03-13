@@ -115,5 +115,9 @@ background-color: none;
     outline: none;
     border: none;
  }
+.checkinput{
+    margin-right: 10px;
+    margin-top: 10px;
+}
 
     
