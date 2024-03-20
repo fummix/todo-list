@@ -52,7 +52,7 @@ saveToLocalStorage()
 setTodo({todoName:'',id: todoList.length+1, status: false})
   };
 
-  useEffect(() => {
+  useEffect(()=>{
     getFromLocalStorage()
   }, []);
   
@@ -63,11 +63,11 @@ setTodo({todoName:'',id: todoList.length+1, status: false})
           <h2>Add new Todo</h2>
 
           <form  className="task-form" onSubmit={AddToList}>
-          <input type="checkbox" checked={todo.status}   className='checkinput'   onChange={handleCheckBoxChange} name="status"
-          style={{ border: "1px solid gray", "borderradius": "1px", width: "20px",  height:"20px" ," backgroundcolor": "white"}}/>
+          
+          
             <input type="text" name="todoName" placeholder="Todo Name" id="task-form-input" value={todo.todoName}
              onChange={handleChange}/>
-            {/* <input type="submit" value="Add" id="task-form-submit"  onClick={ (e)}/> */}
+           
             <button  type='submit' className="btn" >Add</button>
 
           </form>
@@ -79,10 +79,10 @@ setTodo({todoName:'',id: todoList.length+1, status: false})
   {todoList.length > 0 ? (
     todoList.map((item) => (
       <div className="task" key={item.id}>
-        <div className="container">
+        {/* <div className="container">
           <p style={{textDecoration: item.status?'line-through':'none'}}>{item.todoName}</p>
-        </div>
-        <div className="icons">
+        </div> */}
+        {/* <div className="icons">
                   <button onClick={()=>showRecordInForm(item)}
             className="edit"
             style={{
@@ -106,11 +106,29 @@ setTodo({todoName:'',id: todoList.length+1, status: false})
           >
             Delete
           </button>
-        </div>
+        </div> */}
       </div>
     ))
   ) : (
-    <p> No tasks available</p>
+    // <p> No tasks available</p>
+    <div>
+        {/* <div className="container"> */}
+            <ul className="flex-container">
+                <li className="row">
+                    <input type="checkbox" className="sm1" /> 
+                    <span className="sm10">task1</span>
+                    <i className="material-icons icon">delete</i>
+                </li>
+                <li className="row">
+                    <input type="checkbox" className="sm1" /> 
+                    <span className="sm10">task2</span>
+                    <i className="material-icons icon">delete</i> 
+                </li>
+                
+            </ul>
+            
+        </div>
+    // </div>
   )}
 </div>
 

@@ -120,4 +120,33 @@ background-color: none;
     margin-top: 10px;
 }
 
-    
+.flex-container {
+    list-style-type: none;
+    padding: 0;
+}
+
+.row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Adjust margin as needed */
+    border-radius: 5px;
+    background-color: #ffff;
+    padding: 15px;
+}
+
+.row input[type="checkbox"],
+.row .icon {
+    flex: 1;
+    margin-right: 5px;
+    cursor: pointer;
+}
+.icon{
+    color:red;
+    font-size:24px;
+}
+
+.row span {
+    flex: 10;
+}
+
+  
