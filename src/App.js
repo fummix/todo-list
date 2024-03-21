@@ -4,7 +4,7 @@ import './App.css';
 
 function App() {
   const [todoList, setTodoList] = useState([])
-  const [todo, setTodo] = useState({ todoName: '', id: todoList.length + 1, status: false })
+  const [todo, setTodo] = useState({ todoName: '', id: 0, status: false })
   //##################
   const showRecordInForm = (item) => {
     setTodo(item)
@@ -25,13 +25,17 @@ function App() {
       [name]: value
     });
   };
+
   const handleCheckBoxChange = (e, item) => {
     const { name, checked } = e.target;
-    console.log(name, checked, item)
-    if(checked){
-      showRecordInForm(item)
-    }
+   const itemPositionInTodoList =todoList.indexOf(item) // get the position of item in todoList
+    const updatedTodo = { ...item, [name]: checked };
+    todoList[itemPositionInTodoList] = updatedTodo;
+    console.log(todoList)
+   saveToLocalStorage(todoList);
+   
   };
+
   const saveToLocalStorage = (itemList) => { // method to save to local storage
     const todoJson = JSON.stringify(itemList) // converted to json before saving
     localStorage.setItem("todo", todoJson); // save to local storage
@@ -50,9 +54,10 @@ function App() {
       alert('Kindly input a todoname');
       return;
     }
-    todoList.push(todo) // add todo to list
+
+    todoList.push({...todo, id: todoList.length+1}) // add todo to list
     saveToLocalStorage(todoList)
-    setTodo({ todoName: '', id: todoList.length + 1, status: false })
+    setTodo({ todoName: '', id: 0, status: false })
   };
 
   useEffect(() => {
@@ -82,8 +87,9 @@ function App() {
               todoList.map((item) => (
 
                 <li className="row" key={item.id} >
-                  <input type="checkbox" className="sm1" id="myCheckbox" name="status" onChange={(event) => handleCheckBoxChange(event, item)} />
-                  <span className="sm10">{item.todoName}</span>
+                  <input type="checkbox" className="sm1"  checked={item.status}
+                  name="status" onChange={(event) => handleCheckBoxChange(event, item)} />
+                  <span className="sm10" style={{textDecoration: item.status?'line-through':'none'}}>{item.todoName}</span>
                   <i className="material-icons icon" style={{ "marginRight": "-40px" }} onClick={() => deleteRecord(item.id)}>delete</i>
                 </li>
               )
